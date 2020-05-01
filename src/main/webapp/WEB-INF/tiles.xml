@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+   
+   <!-- Layout -->
+   <definition name="Layout" template="/layout/BaseLayout.jsp">   
+		<put-attribute name="title" value="" />
+		<put-attribute name="banner" value="/layout/partes/Banner.jsp" />		
+		<put-attribute name="navbar" value="/layout/partes/Navbar.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/layout/partes/Footer.jsp" />	
+	</definition>
+
+	<!-- Home -->
+	<definition name="home" extends="Layout">
+		<put-attribute name="title" value="Página Inicial" />
+		<put-attribute name="body" type="template" value="/Home.jsp" />		
+	</definition>
+	
+	<!-- Login -->
+	<definition name="login" extends="Layout">
+		<put-attribute name="title" value="Página de Login" />
+		<put-attribute name="body" type="template" value="/view/Login.jsp" />		
+	</definition>	
+	
+	<!-- Cadastro -->
+	<definition name="cadastro" extends="Layout">
+		<put-attribute name="title" value="Página de Cadastro" />
+		<put-attribute name="body" type="template" value="/view/Cadastro.jsp" />		
+	</definition>
+	
+	<!-- Lista -->
+	<definition name="lista" extends="Layout">
+		<put-attribute name="title" value="Página de Usuários" />
+		<put-attribute name="body" type="template" value="/view/Lista.jsp" />		
+	</definition>
+	
+	<!-- Altera -->
+	<definition name="altera" extends="Layout">
+		<put-attribute name="title" value="Página de alteração de Usuários" />
+		<put-attribute name="body" type="template" value="/view/UsuarioFormulario.jsp" />		
+	</definition>
+
+</tiles-definitions>  

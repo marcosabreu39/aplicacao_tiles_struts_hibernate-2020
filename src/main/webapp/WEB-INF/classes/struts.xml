@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation // DTD Struts Configuration 2.0// EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	
+	<constant name="struts.action.extension" value="jsp" />
+
+		<package name="default" extends="struts-default">
+
+		  <result-types>
+	         <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+	      </result-types>
+
+		<action name="Home" class="com.crud.action.HomeAction" method="home">
+			<result name="success" type="tiles">home</result>
+		</action>
+
+		<action name="">
+			<result name="success" type="redirectAction">
+			<param name="actionName">Home</param>
+			</result>
+		</action>
+		
+		<action name="Login" class="com.crud.action.AutenticacaoAction" method="login">
+			<result name="success" type="tiles">login</result>
+			<result name="input" type="tiles">login</result>			
+		</action>
+		
+		<action name="Logon" class="com.crud.action.AutenticacaoAction" method="logon">
+			<result name="success" type="redirectAction">
+			<param name="actionName">Home</param>			
+			</result>
+			<result name="input" type="redirectAction">
+			<param name="actionName">Login</param>
+			</result>
+		</action>
+
+		<action name="Logout" class="com.crud.action.AutenticacaoAction" method="logout">
+			<result name="success" type="redirectAction">
+			<param name="actionName">Home</param>			
+			</result>
+		</action>
+
+		<action name="Cadastro" class="com.crud.action.UsuarioAction" method="cadastro">
+			<result name="success" type="tiles">cadastro</result>
+		</action>
+
+		<action name="Adiciona" class="com.crud.action.UsuarioAction" method="adiciona">
+			<result name="success" type="redirectAction">UsuarioLista</result>
+			<result name="input" type="redirectAction">Cadastro</result>
+		</action>
+
+		<action name="Altera" class="com.crud.action.UsuarioAction" method="altera">
+			<result name="success" type="redirectAction">UsuarioLista</result>
+			<result name="input" type="tiles">altera</result>
+			<result name="login" type="redirectAction">Login</result>
+		</action>
+
+		<action name="Remove" class="com.crud.action.UsuarioAction" method="remove">
+			<result name="success" type="redirectAction">
+			<param name="actionName">UsuarioLista</param>
+			</result>
+			<result name="error" type="redirectAction">
+			<param name="actionName">Login</param>
+			</result>
+		</action>
+
+		<action name="UsuarioPreparaAlteracao" class="com.crud.action.UsuarioAction" method="preparaAlteracao">
+			<result name="success" type="tiles">altera</result>
+			<result name="error" type="redirectAction">
+			<param name="actionName">Login</param>
+			</result>
+		</action>
+
+		<action name="UsuarioLista" class="com.crud.action.UsuarioAction" method="lista">
+			<result name="success" type="tiles">lista</result>			
+			<result name="error" type="redirectAction">
+			<param name="actionName">Home</param>
+			</result>
+		</action>
+	
+	</package>
+</struts>

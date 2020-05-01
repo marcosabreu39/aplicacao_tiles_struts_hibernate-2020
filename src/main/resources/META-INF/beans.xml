@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<beans bean-discovery-mode="annotated" version="1.2"
+ xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
+ <scan>
+  <!--   <exclude name="com.crud.action"/> 
+   <exclude name="com.crud.filter"/> 
+   <exclude name="com.crud.util"/> 
+   <exclude name="com.crud.model.Repository"/> 
+   <exclude name="com.crud.model.UsuarioRepository"/> -->
+ </scan>
+</beans>
