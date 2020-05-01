@@ -49,7 +49,6 @@ public class UsuarioAction extends ActionSupport {
 					repository.adiciona(usuarioNovo);
 					mensagem = "Cadastro realizado com sucesso!";
 					HttpSession session = ServletActionContext.getRequest().getSession();
-//					Usuario usuarioNovo = usuario;
 					session.setAttribute("usuarioNovo", this.usuario.clone());
 					Util.setMensagem(mensagem);
 					Util.apagarMsg(1);
