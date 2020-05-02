@@ -2,15 +2,12 @@ package com.crud.action;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
-import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.crud.facade.UsuarioFacade;
 import com.crud.model.Usuario;
-import com.crud.repository.UsuarioRepository;
 import com.crud.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -36,23 +33,22 @@ public class AutenticacaoAction extends ActionSupport {
 	public String logon() {
 		String retorno = "";
 		try {
-			if (this.usuario.getUserName() == null || this.usuario.getPassword() == null) {
+			if (Util.logonValido(this.usuario)) {
 				this.pagina = "login";
 				retorno = AutenticacaoAction.INPUT;
 			} else {
-				if (usuarioFacade.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
-					HttpSession session = ServletActionContext.getRequest().getSession(true);
-					session.setAttribute("usuario", this.usuario.clone());
+				if (usuarioFacade.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {					
+					Util.colocarUsuarioNaSessao("usuario", this.usuario.clone());
 					this.mensagem = "Autenticação realizada com sucesso!";
 					Util.setMensagem(mensagem);
-					Util.apagarMsg(1);
+					Util.apagarMensagem(1);
 					pagina = "home";
 					retorno = AutenticacaoAction.SUCCESS;
 					LOGGER.info(mensagem);
 				} else {
 					this.mensagem = "Usuário e/ou senha incorretos!";
 					Util.setMensagem(mensagem);
-					Util.apagarMsg(1);
+					Util.apagarMensagem(1);
 					this.pagina = "login";
 					retorno = AutenticacaoAction.INPUT;
 					LOGGER.info(mensagem);
@@ -67,11 +63,10 @@ public class AutenticacaoAction extends ActionSupport {
 
 	public String logout() {
 		try {
-			HttpSession session = ServletActionContext.getRequest().getSession();
-			session.removeAttribute("usuario");
+			Util.removerDaSessao("usuario");
 			this.mensagem = "Até logo!";
 			Util.setMensagem(mensagem);
-			Util.apagarMsg(1);
+			Util.apagarMensagem(1);
 			this.pagina = "login";
 			LOGGER.info("Logout realizado com sucesso!");
 		} catch (Exception e) {

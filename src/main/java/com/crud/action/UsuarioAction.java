@@ -8,13 +8,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.crud.facade.UsuarioFacade;
 import com.crud.model.Usuario;
-import com.crud.repository.UsuarioRepository;
 import com.crud.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -40,24 +38,21 @@ public class UsuarioAction extends ActionSupport {
 	public String adiciona() {
 		String retorno = "";
 		try {
-			if (usuario.getNome() == null || usuario.getNome().equals("") 
-					|| usuario.getUserName() == null || usuario.getUserName().equals("") 
-					|| usuario.getPassword() == null || usuario.getPassword().equals("")) {
+			if (Util.usuarioValido(this.usuario)) {
 				retorno = UsuarioAction.INPUT;
 			} else {
 				if (!usuarioFacade.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
 					usuarioFacade.adiciona(this.usuario.clone());
 					mensagem = "Cadastro realizado com sucesso!";
-					HttpSession session = ServletActionContext.getRequest().getSession();
-					session.setAttribute("usuarioNovo", this.usuario.clone());
+					Util.colocarUsuarioNaSessao("usuarioNovo", this.usuario.clone());
 					Util.setMensagem(mensagem);
-					Util.apagarMsg(1);
+					Util.apagarMensagem(1);
 					retorno = UsuarioAction.SUCCESS;
 					LOGGER.info(mensagem);
 				} else {
 					mensagem = "Usuário já cadastrado!";
 					Util.setMensagem(mensagem);
-					Util.apagarMsg(1);
+					Util.apagarMensagem(1);
 					retorno = UsuarioAction.INPUT;
 					LOGGER.info(mensagem);
 				}
@@ -71,29 +66,27 @@ public class UsuarioAction extends ActionSupport {
 	public String altera() {
 		String retorno = "";
 		try {
-			session = ServletActionContext.getRequest().getSession();
-			if (session.getAttribute("usuario") == null) {
+			if (!Util.ExisteNaSessao("usuario")) {
 				pagina = "login";
 				retorno = UsuarioAction.LOGIN;
 			} else {
 				if (this.usuario.getId() == null) {
 					retorno = UsuarioAction.LOGIN;
 				} else {
-					session = ServletActionContext.getRequest().getSession();
-					if (session.getAttribute("loginUsuarioParaAlterar").equals(this.usuario.getUserName())
+					if (Util.pegarDaSessao("loginUsuarioParaAlterar").equals(this.usuario.getUserName())
 							|| !usuarioFacade.existeUsername(this.usuario.getUserName())) {
 						usuarioFacade.altera(this.usuario.clone());
 						mensagem = "Usuário alterado com sucesso!";
 						pagina = "usuario";
 						Util.setMensagem(mensagem);
-						Util.apagarMsg(1);
+						Util.apagarMensagem(1);
 						retorno = UsuarioAction.SUCCESS;
 						LOGGER.info(mensagem);
 						session.removeAttribute("loginUsuarioParaAlterar");
 					} else {
 						mensagem = "Este login já está sendo utilizado!";
 						Util.setMensagem(mensagem);
-						Util.apagarMsg(1);
+						Util.apagarMensagem(1);
 						retorno = UsuarioAction.INPUT;
 						LOGGER.info(mensagem);
 					}
@@ -108,16 +101,15 @@ public class UsuarioAction extends ActionSupport {
 	public String remove() {
 		String retorno = "";
 		try {
-			session = ServletActionContext.getRequest().getSession();
-			if (session.getAttribute("usuario") == null) {
+			if (!Util.ExisteNaSessao("usuario")) {
 				retorno = UsuarioAction.ERROR;
-			} else {			
-			usuarioFacade.remove(this.usuario.getId());
-			mensagem = "Usuário removido com sucesso!";
-			Util.setMensagem(mensagem);
-			Util.apagarMsg(1);
-			LOGGER.info(mensagem);
-			retorno = UsuarioAction.SUCCESS;
+			} else {
+				usuarioFacade.remove(this.usuario.getId());
+				mensagem = "Usuário removido com sucesso!";
+				Util.setMensagem(mensagem);
+				Util.apagarMensagem(1);
+				LOGGER.info(mensagem);
+				retorno = UsuarioAction.SUCCESS;
 			}
 		} catch (Exception e) {
 			LOGGER.error("Ocorreu erro na remoção do usuário!", e);
@@ -128,34 +120,30 @@ public class UsuarioAction extends ActionSupport {
 	public String preparaAlteracao() {
 		String retorno = "";
 		try {
-			session = ServletActionContext.getRequest().getSession();
-			if (session.getAttribute("usuario") == null) {
+			if (!Util.ExisteNaSessao("usuario")) {
 				pagina = "login";
 				retorno = UsuarioAction.ERROR;
 			} else {
-			this.usuario = usuarioFacade.busca(this.usuario.getId());
-			String loginUsuarioParaAlterar = this.usuario.getUserName();
-			session = ServletActionContext.getRequest().getSession();
-			session.setAttribute("loginUsuarioParaAlterar", loginUsuarioParaAlterar);
-			 retorno = UsuarioAction.SUCCESS;
-		}
+				this.usuario = usuarioFacade.busca(this.usuario.getId());
+				Util.colocarNaSessao("loginUsuarioParaAlterar", this.usuario.getUserName());
+				retorno = UsuarioAction.SUCCESS;
+			}
 		} catch (Exception e) {
 			LOGGER.error("Ocorreu erro na busca do usuário!", e);
 		}
 		return retorno;
-		
+
 	}
 
 	public String lista() {
 		String retorno = "";
 		try {
-			session = ServletActionContext.getRequest().getSession();
-			if (session.getAttribute("usuario") != null) {
+			if (Util.ExisteNaSessao("usuario")) {
 				this.usuarios = usuarioFacade.lista();
 				pagina = "usuario";
 				retorno = UsuarioAction.SUCCESS;
-			} else if (session.getAttribute("usuarioNovo") != null) {
-				this.usuarios.add((Usuario) session.getAttribute("usuarioNovo"));
+			} else if (Util.ExisteNaSessao("usuarioNovo")) {
+				this.usuarios.add((Usuario) Util.pegarDaSessao("usuarioNovo"));
 				session.removeAttribute("usuarioNovo");
 				return UsuarioAction.SUCCESS;
 			} else {
