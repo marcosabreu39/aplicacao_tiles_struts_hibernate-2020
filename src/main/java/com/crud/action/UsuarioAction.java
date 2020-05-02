@@ -21,7 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @SuppressWarnings("serial")
 public class UsuarioAction extends ActionSupport {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(UsuarioAction.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioAction.class);
 	private String mensagem = Util.getMensagem();
 	private String pagina;
 	@Inject
@@ -45,8 +45,7 @@ public class UsuarioAction extends ActionSupport {
 				retorno = UsuarioAction.INPUT;
 			} else {
 				if (!repository.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
-					Usuario usuarioNovo = this.usuario.clone();
-					repository.adiciona(usuarioNovo);
+					repository.adiciona(this.usuario.clone());
 					mensagem = "Cadastro realizado com sucesso!";
 					HttpSession session = ServletActionContext.getRequest().getSession();
 					session.setAttribute("usuarioNovo", this.usuario.clone());
@@ -140,7 +139,7 @@ public class UsuarioAction extends ActionSupport {
 			 retorno = UsuarioAction.SUCCESS;
 		}
 		} catch (Exception e) {
-			LOGGER.error("Ocorreu erro na busca do usuário", e);
+			LOGGER.error("Ocorreu erro na busca do usuário!", e);
 		}
 		return retorno;
 		

@@ -17,7 +17,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @SuppressWarnings("serial")
 public class AutenticacaoAction extends ActionSupport {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(AutenticacaoAction.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AutenticacaoAction.class);
 
 	@Inject
 	private Usuario usuario;

@@ -2,6 +2,7 @@ package com.crud.model;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,34 +14,40 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Named
 @RequestScoped
 public class UsuarioRepository implements Repository<Usuario> {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(UsuarioRepository.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioRepository.class);
 
 	@Inject
 	private EntityManager manager;
 
-	@Transactional
+	@PostConstruct
+	@Override
+	public void iniciarTransacao() {
+		if (!this.manager.getTransaction().isActive())
+			this.manager.getTransaction().begin();
+		}
+
+
 	@Override
 	public Usuario busca(Integer id) {
 		Usuario u = null;
 		try {
-			u = this.manager.find(Usuario.class, id);
+			u = this.manager.find(Usuario.class, id);			
 		} catch (Exception e) {
 			LOGGER.error("Ocorreu erro na busca do usuário!", e);
 		}
 		return u;
 	}
 
-//	@Transactional
+
 	@Override
 	public void adiciona(Usuario usuario) {
 		try {
-			this.manager.getTransaction().begin();
 			this.manager.persist(usuario);
 			this.manager.getTransaction().commit();
+
 		} catch (Exception e) {
 			this.manager.getTransaction().rollback();
 			LOGGER.error("Ocorreu erro na inserção do usuário!", e);
@@ -48,7 +55,7 @@ public class UsuarioRepository implements Repository<Usuario> {
 
 	}
 
-	@Transactional
+
 	@Override
 	public void remove(Integer id) {
 		try {
@@ -62,7 +69,7 @@ public class UsuarioRepository implements Repository<Usuario> {
 
 	}
 
-	@Transactional
+
 	@Override
 	public void altera(Usuario usuario) {
 		try {
@@ -74,7 +81,7 @@ public class UsuarioRepository implements Repository<Usuario> {
 		}
 	}
 
-	@Transactional
+
 	@Override
 	public List<Usuario> lista() {
 		List<Usuario> result = null;
@@ -87,13 +94,12 @@ public class UsuarioRepository implements Repository<Usuario> {
 		return result;
 	}
 
-	@Transactional
+
 	@Override
 	public boolean existeUsernameEPassword(String userName, String password) {
 		boolean result = false;
 		try {
-			Query query = this.manager
-					.createQuery("select u from Usuario u where u.userName=:userName and u.password=:password");
+			Query query = this.manager.createQuery("select u from Usuario u where u.userName=:userName and u.password=:password");
 			query.setParameter("userName", userName);
 			query.setParameter("password", password);
 			result = !query.getResultList().isEmpty();
@@ -103,7 +109,7 @@ public class UsuarioRepository implements Repository<Usuario> {
 		return result;
 	}
 
-	@Transactional
+
 	@Override
 	public boolean existeUsername(String userName) {
 		boolean result = false;

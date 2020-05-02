@@ -13,14 +13,12 @@ public class EntityManagerProducer {
 
 	private static EntityManagerFactory emf;
 
-	
 	@PostConstruct
 	private void createEntityManagerFactory() {
-		 emf = Persistence.createEntityManagerFactory("CRUD-PU");
+		emf = Persistence.createEntityManagerFactory("CRUD-PU");
 	}
 
 	@Produces
-//	@RequestScoped
 	public EntityManager createEntityManager() {
 		return emf.createEntityManager();
 	}

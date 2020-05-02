@@ -17,5 +17,7 @@ public interface Repository<T> {
 	boolean existeUsernameEPassword(String userName, String password) ;	
 	
 	boolean existeUsername(String userName);
+
+	void iniciarTransacao();
 	
 }
