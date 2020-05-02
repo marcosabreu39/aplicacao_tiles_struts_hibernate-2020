@@ -8,6 +8,7 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.crud.facade.UsuarioFacade;
 import com.crud.model.Usuario;
 import com.crud.repository.UsuarioRepository;
 import com.crud.util.Util;
@@ -24,7 +25,7 @@ public class AutenticacaoAction extends ActionSupport {
 	private String mensagem = Util.getMensagem();
 	private String pagina;
 	@Inject
-	UsuarioRepository repository;
+	UsuarioFacade usuarioFacade;
 	
 	public String login() {		
 		this.pagina = "login";		
@@ -39,7 +40,7 @@ public class AutenticacaoAction extends ActionSupport {
 				this.pagina = "login";
 				retorno = AutenticacaoAction.INPUT;
 			} else {
-				if (repository.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
+				if (usuarioFacade.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
 					HttpSession session = ServletActionContext.getRequest().getSession(true);
 					session.setAttribute("usuario", this.usuario.clone());
 					this.mensagem = "Autenticação realizada com sucesso!";
