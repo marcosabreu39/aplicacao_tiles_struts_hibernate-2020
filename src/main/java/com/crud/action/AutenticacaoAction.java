@@ -8,8 +8,8 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.crud.model.Repository;
 import com.crud.model.Usuario;
+import com.crud.repository.Repository;
 import com.crud.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 

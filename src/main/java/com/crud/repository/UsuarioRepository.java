@@ -1,18 +1,18 @@
-package com.crud.model;
+package com.crud.repository;
 
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.crud.model.Usuario;
 
 @RequestScoped
 public class UsuarioRepository implements Repository<Usuario> {
