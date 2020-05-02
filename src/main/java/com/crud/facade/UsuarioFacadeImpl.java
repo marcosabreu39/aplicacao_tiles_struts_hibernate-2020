@@ -2,11 +2,13 @@ package com.crud.facade;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import com.crud.model.Usuario;
 import com.crud.repository.UsuarioRepository;
 
+@RequestScoped
 public class UsuarioFacadeImpl implements UsuarioFacade {
 	
 	@Inject
