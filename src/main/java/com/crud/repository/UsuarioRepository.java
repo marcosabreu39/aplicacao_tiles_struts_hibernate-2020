@@ -2,7 +2,7 @@ package com.crud.repository;
 
 import java.util.List;
 
-public interface Repository<T> {
+public interface UsuarioRepository<T> {
 
 	T busca(Integer id);
 

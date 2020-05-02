@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.crud.model.Usuario;
-import com.crud.repository.Repository;
+import com.crud.repository.UsuarioRepository;
 import com.crud.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -28,7 +28,7 @@ public class UsuarioAction extends ActionSupport {
 	private Usuario usuario;
 	private List<Usuario> usuarios;
 	@Inject
-	private Repository<Usuario> repository;
+	private UsuarioRepository<Usuario> repository;
 	private HttpSession session;
 
 	@PostConstruct

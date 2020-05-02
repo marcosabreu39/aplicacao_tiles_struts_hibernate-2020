@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.crud.model.Usuario;
-import com.crud.repository.Repository;
+import com.crud.repository.UsuarioRepository;
 import com.crud.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -24,7 +24,7 @@ public class AutenticacaoAction extends ActionSupport {
 	private String mensagem = Util.getMensagem();
 	private String pagina;
 	@Inject
-	Repository<Usuario> repository;
+	UsuarioRepository<Usuario> repository;
 	
 	public String login() {		
 		this.pagina = "login";		
