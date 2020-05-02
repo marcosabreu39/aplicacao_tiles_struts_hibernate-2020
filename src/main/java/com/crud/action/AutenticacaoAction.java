@@ -24,7 +24,7 @@ public class AutenticacaoAction extends ActionSupport {
 	private String mensagem = Util.getMensagem();
 	private String pagina;
 	@Inject
-	UsuarioRepository<Usuario> repository;
+	UsuarioRepository repository;
 	
 	public String login() {		
 		this.pagina = "login";		

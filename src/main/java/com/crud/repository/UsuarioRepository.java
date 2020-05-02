@@ -2,22 +2,22 @@ package com.crud.repository;
 
 import java.util.List;
 
-public interface UsuarioRepository<T> {
+import com.crud.model.Usuario;
 
-	T busca(Integer id);
+public interface UsuarioRepository {
 
-	void adiciona(T t);
+	Usuario busca(Integer id) throws Exception;
 
-	void remove(Integer id);
+	void adiciona(Usuario U) throws Exception;
 
-	void altera(T t);
+	void remove(Integer id) throws Exception;
 
-	List<T> lista();
+	void altera(Usuario u) throws Exception;
 
-	boolean existeUsernameEPassword(String userName, String password) ;	
+	List<Usuario> lista() throws Exception;
+
+	boolean existeUsernameEPassword(String userName, String password) throws Exception ;	
 	
-	boolean existeUsername(String userName);
-
-	void iniciarTransacao();
+	boolean existeUsername(String userName) throws Exception;	
 	
 }

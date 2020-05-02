@@ -3,6 +3,7 @@ package com.crud.dao;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.crud.model.Usuario;
 
+@RequestScoped
 public class UsuarioDaoImpl implements UsuarioDao {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioDaoImpl.class);

@@ -2,125 +2,65 @@ package com.crud.repository;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.crud.dao.UsuarioDao;
 import com.crud.model.Usuario;
 
 @RequestScoped
-public class UsuarioRepositoryImpl implements UsuarioRepository<Usuario> {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioRepositoryImpl.class);
+public class UsuarioRepositoryImpl implements UsuarioRepository {	
 
 	@Inject
-	private EntityManager manager;
-
-	@PostConstruct
-	@Override
-	public void iniciarTransacao() {
-		if (!this.manager.getTransaction().isActive())
-			this.manager.getTransaction().begin();
-		}
-
+	UsuarioDao usuarioDao;
 
 	@Override
-	public Usuario busca(Integer id) {
-		Usuario u = null;
-		try {
-			u = this.manager.find(Usuario.class, id);			
-		} catch (Exception e) {
-			LOGGER.error("Ocorreu erro na busca do usuário!", e);
-		}
-		return u;
+	public Usuario busca(Integer id) throws Exception {
+		
+		return usuarioDao.busca(id);
 	}
 
 
 	@Override
-	public void adiciona(Usuario usuario) {
-		try {
-			this.manager.persist(usuario);
-			this.manager.getTransaction().commit();
+	public void adiciona(Usuario usuario) throws Exception {
+		
+		usuarioDao.adiciona(usuario);
+	}
 
-		} catch (Exception e) {
-			this.manager.getTransaction().rollback();
-			LOGGER.error("Ocorreu erro na inserção do usuário!", e);
-		}
+
+	@Override
+	public void remove(Integer id) throws Exception {
+		
+		usuarioDao.remove(id);
 
 	}
 
 
 	@Override
-	public void remove(Integer id) {
-		try {
-			Usuario usuario = this.manager.find(Usuario.class, id);
-			this.manager.remove(usuario);
-			this.manager.getTransaction().commit();
-		} catch (Exception e) {
-			this.manager.getTransaction().rollback();
-			LOGGER.error("Ocorreu erro na remoção do usuário!", e);
-		}
-
+	public void altera(Usuario usuario) throws Exception {
+		
+		usuarioDao.altera(usuario);
 	}
 
 
 	@Override
-	public void altera(Usuario usuario) {
-		try {
-			this.manager.merge(usuario);
-			this.manager.getTransaction().commit();
-		} catch (Exception e) {
-			this.manager.getTransaction().rollback();
-			LOGGER.error("Ocorreu erro na alteração do usuário!", e);
-		}
+	public List<Usuario> lista() throws Exception {
+		
+		return usuarioDao.lista();
 	}
 
 
 	@Override
-	public List<Usuario> lista() {
-		List<Usuario> result = null;
-		try {
-			TypedQuery<Usuario> query = this.manager.createQuery("select u from Usuario u", Usuario.class);
-			result = query.getResultList();
-		} catch (Exception e) {
-			LOGGER.error("Ocorreu erro na busca dos usuários!", e);
-		}
-		return result;
+	public boolean existeUsernameEPassword(String userName, String password) throws Exception {
+		
+		return usuarioDao.existeUsernameEPassword(userName, password);
 	}
 
 
 	@Override
-	public boolean existeUsernameEPassword(String userName, String password) {
-		boolean result = false;
-		try {
-			Query query = this.manager.createQuery("select u from Usuario u where u.userName=:userName and u.password=:password");
-			query.setParameter("userName", userName);
-			query.setParameter("password", password);
-			result = !query.getResultList().isEmpty();
-		} catch (Exception e) {
-			LOGGER.error("Ocorreu erro na verificação de login e senha do usuário!", e);
-		}
-		return result;
-	}
-
-
-	@Override
-	public boolean existeUsername(String userName) {
-		boolean result = false;
-		try {
-			Query query = this.manager.createQuery("select u from Usuario u where u.userName=:userName");
-			query.setParameter("userName", userName);
-			result = !query.getResultList().isEmpty();
-		} catch (Exception e) {
-			LOGGER.error("Ocorreu erro na verificação de login do usuário!", e);
-		}
-		return result;
+	public boolean existeUsername(String userName) throws Exception {
+		
+		return usuarioDao.existeUsername(userName);
 	}
 
 }

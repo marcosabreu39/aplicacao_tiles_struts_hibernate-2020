@@ -28,7 +28,7 @@ public class UsuarioAction extends ActionSupport {
 	private Usuario usuario;
 	private List<Usuario> usuarios;
 	@Inject
-	private UsuarioRepository<Usuario> repository;
+	private UsuarioRepository repository;
 	private HttpSession session;
 
 	@PostConstruct
