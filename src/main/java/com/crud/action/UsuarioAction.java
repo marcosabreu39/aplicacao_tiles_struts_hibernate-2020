@@ -12,6 +12,7 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.crud.facade.UsuarioFacade;
 import com.crud.model.Usuario;
 import com.crud.repository.UsuarioRepository;
 import com.crud.util.Util;
@@ -28,7 +29,7 @@ public class UsuarioAction extends ActionSupport {
 	private Usuario usuario;
 	private List<Usuario> usuarios;
 	@Inject
-	private UsuarioRepository repository;
+	private UsuarioFacade usuarioFacade;
 	private HttpSession session;
 
 	@PostConstruct
@@ -44,8 +45,8 @@ public class UsuarioAction extends ActionSupport {
 					|| usuario.getPassword() == null || usuario.getPassword().equals("")) {
 				retorno = UsuarioAction.INPUT;
 			} else {
-				if (!repository.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
-					repository.adiciona(this.usuario.clone());
+				if (!usuarioFacade.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
+					usuarioFacade.adiciona(this.usuario.clone());
 					mensagem = "Cadastro realizado com sucesso!";
 					HttpSession session = ServletActionContext.getRequest().getSession();
 					session.setAttribute("usuarioNovo", this.usuario.clone());
@@ -80,8 +81,8 @@ public class UsuarioAction extends ActionSupport {
 				} else {
 					session = ServletActionContext.getRequest().getSession();
 					if (session.getAttribute("loginUsuarioParaAlterar").equals(this.usuario.getUserName())
-							|| !repository.existeUsername(this.usuario.getUserName())) {
-						repository.altera(this.usuario.clone());
+							|| !usuarioFacade.existeUsername(this.usuario.getUserName())) {
+						usuarioFacade.altera(this.usuario.clone());
 						mensagem = "Usuário alterado com sucesso!";
 						pagina = "usuario";
 						Util.setMensagem(mensagem);
@@ -111,7 +112,7 @@ public class UsuarioAction extends ActionSupport {
 			if (session.getAttribute("usuario") == null) {
 				retorno = UsuarioAction.ERROR;
 			} else {			
-			repository.remove(this.usuario.getId());
+			usuarioFacade.remove(this.usuario.getId());
 			mensagem = "Usuário removido com sucesso!";
 			Util.setMensagem(mensagem);
 			Util.apagarMsg(1);
@@ -132,7 +133,7 @@ public class UsuarioAction extends ActionSupport {
 				pagina = "login";
 				retorno = UsuarioAction.ERROR;
 			} else {
-			this.usuario = repository.busca(this.usuario.getId());
+			this.usuario = usuarioFacade.busca(this.usuario.getId());
 			String loginUsuarioParaAlterar = this.usuario.getUserName();
 			session = ServletActionContext.getRequest().getSession();
 			session.setAttribute("loginUsuarioParaAlterar", loginUsuarioParaAlterar);
@@ -150,7 +151,7 @@ public class UsuarioAction extends ActionSupport {
 		try {
 			session = ServletActionContext.getRequest().getSession();
 			if (session.getAttribute("usuario") != null) {
-				this.usuarios = repository.lista();
+				this.usuarios = usuarioFacade.lista();
 				pagina = "usuario";
 				retorno = UsuarioAction.SUCCESS;
 			} else if (session.getAttribute("usuarioNovo") != null) {
