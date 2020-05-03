@@ -1,0 +1,7 @@
+@charset "utf-8";
+
+.errorMessage
+{
+	background-color: #ff6347;
+	color: white;
+}

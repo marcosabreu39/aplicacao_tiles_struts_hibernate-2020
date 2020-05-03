@@ -18,15 +18,15 @@
 <h1 class="h3 mb-3 font-weight-normal text-center">Página de login</h1>
 
 <div class="row d-flex justify-content-center">
-	<s:form action="Logon" cssClass="form-signin" validate="true">
-		<div class="form-group">
-		<s:textfield name="usuario.userName"  label="Login" cssClass="form-control" />
-		<s:actionerror />		
-		</div>
-		<div class="form-group">
-		<s:password name="usuario.password" label="Senha" cssClass="form-control" />
-		<s:actionerror />		
-		</div>		
-		<s:submit value="Enviar" cssClass="btn btn-lg btn-primary btn-block" />
+	<s:form action="Logon" cssClass="form-signin" validate="true">		
+			<div class="form-group">
+			<s:textfield name="usuario.userName"  label="Login" cssClass="form-control" />
+			<s:actionerror />		
+			</div>
+			<div class="form-group">
+			<s:password name="usuario.password" label="Senha" cssClass="form-control" />
+			<s:actionerror />		
+			</div>		
+			<s:submit value="Enviar" cssClass="btn btn-lg btn-primary btn-block" />		
 	</s:form>
 </div>

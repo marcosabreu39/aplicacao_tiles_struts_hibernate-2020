@@ -20,16 +20,16 @@
 
 <div class="row d-flex justify-content-center">
 
-	<s:form action="Adiciona" validate="true">
-		<div class="form-group">
-		<s:textfield label="Nome" name="usuario.nome" cssClass="form-control" />
-		</div>
-		<div class="form-group">
-		<s:textfield label="Login" name="usuario.userName" cssClass="form-control" />
-		</div>
-		<div class="form-group">
-		<s:password label="Senha" name="usuario.password" cssClass="form-control" />
-		</div>
-		<s:submit value="Salvar" cssClass="btn btn-lg btn-primary btn-block" />
+	<s:form action="Adiciona" validate="true">		
+			<div class="form-group">
+			<s:textfield label="Nome" name="usuario.nome" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+			<s:textfield label="Login" name="usuario.userName" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+			<s:password label="Senha" name="usuario.password" cssClass="form-control" />
+			</div>
+			<s:submit value="Salvar" cssClass="btn btn-lg btn-primary btn-block" />		
 	</s:form>
 </div>

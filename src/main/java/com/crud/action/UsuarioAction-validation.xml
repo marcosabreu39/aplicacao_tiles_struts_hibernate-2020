@@ -5,10 +5,9 @@
 <validators>
    <field name = "usuario.nome">
       <field-validator type = "stringlength">
-         <param name = "minLength">4</param>
-         <param name = "maxLength">12</param>
+         <param name = "minLength">4</param>         
          <message>
-            O nome deve ter entre 4 e 12 caracteres!
+            O nome deve ter no mínimo 4 caracteres!
          </message>
       </field-validator>
    </field>

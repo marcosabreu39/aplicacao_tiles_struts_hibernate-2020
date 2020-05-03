@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +27,7 @@ public class UsuarioAction extends ActionSupport {
 	private List<Usuario> usuarios;
 	@Inject
 	private UsuarioFacade usuarioFacade;
-	private HttpSession session;
-
+	
 	@PostConstruct
 	private void init() {
 		usuarios = new ArrayList<>();
@@ -38,10 +36,10 @@ public class UsuarioAction extends ActionSupport {
 	public String adiciona() {
 		String retorno = "";
 		try {
-			if (Util.usuarioValido(this.usuario)) {
+			if (!Util.usuarioValido(this.usuario)) {
 				retorno = UsuarioAction.INPUT;
 			} else {
-				if (!usuarioFacade.existeUsernameEPassword(this.usuario.getUserName(), this.usuario.getPassword())) {
+				if (!usuarioFacade.existeUsername(this.usuario.getUserName())) {
 					usuarioFacade.adiciona(this.usuario.clone());
 					mensagem = "Cadastro realizado com sucesso!";
 					Util.colocarUsuarioNaSessao("usuarioNovo", this.usuario.clone());
@@ -82,7 +80,7 @@ public class UsuarioAction extends ActionSupport {
 						Util.apagarMensagem(1);
 						retorno = UsuarioAction.SUCCESS;
 						LOGGER.info(mensagem);
-						session.removeAttribute("loginUsuarioParaAlterar");
+						Util.removerDaSessao("loginUsuarioParaAlterar");
 					} else {
 						mensagem = "Este login já está sendo utilizado!";
 						Util.setMensagem(mensagem);
@@ -144,7 +142,7 @@ public class UsuarioAction extends ActionSupport {
 				retorno = UsuarioAction.SUCCESS;
 			} else if (Util.ExisteNaSessao("usuarioNovo")) {
 				this.usuarios.add((Usuario) Util.pegarDaSessao("usuarioNovo"));
-				session.removeAttribute("usuarioNovo");
+				Util.removerDaSessao("usuarioNovo");
 				return UsuarioAction.SUCCESS;
 			} else {
 				retorno = UsuarioAction.ERROR;

@@ -13,9 +13,9 @@
 
 <title><tiles:getAsString name="title" /></title>
 
-<link rel="stylesheet" type="text/css" href="frontend/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="frontend/bootstrap/bootstrap.min.css">
 
-<link rel="stylesheet" type="text/css" href="frontend/style.css">
+<link rel="stylesheet" type="text/css" href="frontend/css/style.css">
 
 </head>
 
@@ -36,7 +36,7 @@
 		
 	</div>
 
-<script type="text/javascript" src="frontend/bootstrap.min.js"></script>
+<script type="text/javascript" src="frontend/bootstrap/bootstrap.min.js"></script>
 
 </body>
 	

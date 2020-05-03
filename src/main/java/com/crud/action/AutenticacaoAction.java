@@ -33,7 +33,7 @@ public class AutenticacaoAction extends ActionSupport {
 	public String logon() {
 		String retorno = "";
 		try {
-			if (Util.logonValido(this.usuario)) {
+			if (!Util.logonValido(this.usuario)) {
 				this.pagina = "login";
 				retorno = AutenticacaoAction.INPUT;
 			} else {

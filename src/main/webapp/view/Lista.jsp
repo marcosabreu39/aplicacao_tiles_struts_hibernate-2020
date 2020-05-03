@@ -50,6 +50,10 @@
 	</c:if>
 	
 	<c:if test="${empty usuarios}">
-		<h1 class="h3 mb-3 font-weight-normal text-center">Sem usuários cadastrados</h1>
+		<div class="alert alert-dark" role="alert">
+			<hr>
+				<h1 class="mb-3 font-weight-normal text-center">Sem usuários cadastrados</h1>
+			<hr>	
+		</div>
 	</c:if>
 </div>	
