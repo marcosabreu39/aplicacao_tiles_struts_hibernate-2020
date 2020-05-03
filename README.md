@@ -2,6 +2,7 @@
 
 ## Tecnologias
 
+* Java 8;
 * Arquitetura MVC;
 * Design Pattern Facade;
 * Design Pattern Repository;
