@@ -22,26 +22,26 @@
 Cadastro de usuário
 ```
 <p align="center">
-  <img width="800" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/extras/AppTilesStrutsHbnt_cadastro.gif">
+  <img width="1600" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/imagens/AppTilesStrutsHbnt_cadastro.gif">
 </p>
 
 ```
 Login na aplicação
 ```
 <p align="center">
-  <img width="800" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/extras/AppTilesStrutsHbnt_login.gif">
+  <img width="1600" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/imagens/AppTilesStrutsHbnt_login.gif">
 </p>
 
 ```
 Alteração de usuário
 ```
 <p align="center">
-  <img width="800" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/extras/AppTilesStrutsHbnt_alterar.gif">
+  <img width="1600" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/imagens/AppTilesStrutsHbnt_alterar.gif">
 </p>
 
 ```
 Remoção de usuário e Logoff
 ```
 <p align="center">
-  <img width="800" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/extras/AppTilesStrutsHbnt_remover_logoff.gif">
+  <img width="1600" src="https://github.com/marcosabreu39/AplicacaoTilesStrutsHibernate/blob/master/src/main/webapp/frontend/imagens/AppTilesStrutsHbnt_remover_logoff.gif">
 </p>
